@@ -65,7 +65,11 @@ const getMKRAnnualBurn = (ethIlk, ethFee, batIlk, batFee, saiSupply, scdFee, sav
 // =================================================================================================
 
 const getGasPrices = async () => {
-  const json = await jsonFetch('https://ethgasstation.info/json/ethgasAPI.json');
+  // TODO UPDATE THIS. Not currently used and results in a bug
+  // const json = await jsonFetch('https://ethgasstation.info/json/ethgasAPI.json');
+
+  // This is just a placeholder
+  const json = await jsonFetch('https://api.coingecko.com/api/v3/simple/price?ids=maker%2Cdai&vs_currencies=usd');
   return json;
 };
 
