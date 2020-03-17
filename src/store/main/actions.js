@@ -132,7 +132,9 @@ export async function poll({ commit, state }) {
     const userAddress = await state.signer.getAddress();
     userQueries = [
       [addresses.MCD_DAI, dai.interface.functions.balanceOf.encode([userAddress])],
-      [addresses.CHAI, dai.interface.functions.balanceOf.encode([userAddress])],
+      [addresses.CHAI, chai.interface.functions.balanceOf.encode([userAddress])],
+      [addresses.MCD_DAI, dai.interface.functions.allowance.encode([userAddress, addresses.ESRedemption])],
+      [addresses.CHAI, chai.interface.functions.allowance.encode([userAddress, addresses.ESRedemption])],
     ];
   }
 
@@ -253,9 +255,13 @@ export async function poll({ commit, state }) {
   // Decode user balances
   let daiBalance = ethers.constants.Zero;
   let chaiBalance = ethers.constants.Zero;
+  let daiAllowance = ethers.constants.Zero;
+  let chaiAllowance = ethers.constants.Zero;
   if (state.signer) {
     [daiBalance] = dai.interface.functions.balanceOf.decode(res[41]);
     [chaiBalance] = chai.interface.functions.balanceOf.decode(res[42]);
+    [daiAllowance] = dai.interface.functions.allowance.decode(res[43]);
+    [chaiAllowance] = chai.interface.functions.allowance.decode(res[44]);
   }
 
   const daiStats = {
@@ -357,6 +363,8 @@ export async function poll({ commit, state }) {
     user: {
       daiBalance: utils.formatEther(daiBalance),
       chaiBalance: utils.formatEther(chaiBalance),
+      daiAllowance: utils.formatEther(daiAllowance),
+      chaiAllowance: utils.formatEther(chaiAllowance),
     },
   };
 

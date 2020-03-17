@@ -21,7 +21,7 @@
         <template v-slot:header>
           <q-item-section>
             <h4>
-              What does this mean?
+              What is an emergency shutdown?
             </h4>
           </q-item-section>
         </template>

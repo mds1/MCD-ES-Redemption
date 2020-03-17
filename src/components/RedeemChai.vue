@@ -16,7 +16,27 @@
         </div>
       </q-card-section>
       <!-- Redeem -->
-      <q-card-section class="form">
+      <!-- if no allowance -->
+      <q-card-section
+        v-if="parseFloat(allowance) === 0"
+        class="form"
+      >
+        <div style="max-width: 300px;">
+          You must first approve this redemption contract to spend your Chai
+        </div>
+        <q-btn
+          color="primary"
+          class="q-mt-xl q-mb-md"
+          label="Approve Chai"
+          :loading="isLoading"
+          @click="setAllowance()"
+        />
+      </q-card-section>
+      <!-- if allowance -->
+      <q-card-section
+        v-else
+        class="form"
+      >
         <div class="col-xs-12 row justify-evenly">
           <q-btn
             color="primary"
@@ -75,7 +95,12 @@
 
 <script>
 import { mapState } from 'vuex';
+import { ethers } from 'ethers';
 import mixinHelpers from 'src/utils/mixinHelpers';
+
+const addresses = require('src/addresses.json');
+const chaiAbi = require('src/abi/Chai.json');
+const esRedemptionAbi = require('src/abi/ESRedemption.json');
 
 export default {
   name: 'RedeemChai',
@@ -92,6 +117,8 @@ export default {
   computed: {
     ...mapState({
       balance: (state) => state.main.data.user.chaiBalance,
+      allowance: (state) => state.main.data.user.chaiAllowance,
+      signer: (state) => state.main.signer,
     }),
   },
 
@@ -100,9 +127,17 @@ export default {
       this.amount = parseFloat(this.balance) * fraction;
     },
 
-    redeem() {
+    async setAllowance() {
       this.isLoading = true;
-      alert('redeem chai');
+      const Chai = new ethers.Contract(addresses.dai, chaiAbi, this.signer);
+      await Chai.approve(addresses.ESRedemption, ethers.constants.MaxUint256);
+      this.isLoading = false;
+    },
+
+    async redeem() {
+      this.isLoading = true;
+      const ESRedemption = new ethers.Contract(addresses.ESRedemption, esRedemptionAbi, this.signer);
+      await ESRedemption.redeemDaiForUsdc(String(this.amount));
       this.isLoading = false;
     },
   },
