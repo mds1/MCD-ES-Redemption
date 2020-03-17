@@ -126,13 +126,15 @@ export async function poll({ commit, state }) {
   // eslint-disable-next-line
   console.log('Polling blockchain for latest data...');
 
-  // Check for signer attached
-  let signer;
+  // If wallet is connected get user-specific information
+  let userQueries = [];
   if (state.signer) {
-    signer = state.signer;
+    const userAddress = await state.signer.getAddress();
+    userQueries = [
+      [addresses.MCD_DAI, dai.interface.functions.balanceOf.encode([userAddress])],
+      [addresses.CHAI, dai.interface.functions.balanceOf.encode([userAddress])],
+    ];
   }
-  console.log('signer: ', signer);
-
 
   // Configure multicall queries
   const p1 = multi.aggregate([
@@ -180,7 +182,9 @@ export async function poll({ commit, state }) {
     // USDC Maker data
     [addresses.MCD_VAT, vat.interface.functions.ilks.encode([usdcIlkBytes])],
     [addresses.MCD_JUG, jug.interface.functions.ilks.encode([usdcIlkBytes])],
-    [addresses.MCD_SPOT, spot.interface.functions.ilks.encode([usdcIlkBytes])],
+    // User address queries
+    // next query is index 41
+    ...userQueries,
   ]);
   const p2 = etherscanEthSupply();
   const p3 = getOSMPrice(addresses.PIP_ETH, POSITION_NXT);
@@ -246,7 +250,13 @@ export async function poll({ commit, state }) {
   const usdcIlk = vat.interface.functions.ilks.decode(res[39]);
   const usdcFee = getFee(base, jug.interface.functions.ilks.decode(res[40]));
   const jugUsdcDrip = jug.interface.functions.ilks.decode(res[40]);
-
+  // Decode user balances
+  let daiBalance = ethers.constants.Zero;
+  let chaiBalance = ethers.constants.Zero;
+  if (state.signer) {
+    [daiBalance] = dai.interface.functions.balanceOf.decode(res[41]);
+    [chaiBalance] = chai.interface.functions.balanceOf.decode(res[42]);
+  }
 
   const daiStats = {
     Line: utils.formatUnits(res[0], 45),
@@ -344,6 +354,10 @@ export async function poll({ commit, state }) {
     blockNumber: blockNumber.toString(),
     daiStats,
     egsGasPrices,
+    user: {
+      daiBalance: utils.formatEther(daiBalance),
+      chaiBalance: utils.formatEther(chaiBalance),
+    },
   };
 
   commit('setData', data);

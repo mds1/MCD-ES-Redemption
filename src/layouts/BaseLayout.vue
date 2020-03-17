@@ -94,16 +94,12 @@
 
 <script>
 import { mapState } from 'vuex';
-import { componentList } from 'src/utils/components';
 
 export default {
   name: 'BaseLayout',
 
   data() {
     return {
-      showComponentSelection: false,
-      componentList,
-      selectedComponents: [],
     };
   },
 

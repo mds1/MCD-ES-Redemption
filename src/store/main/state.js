@@ -22,6 +22,10 @@ export default function () {
         fastWait: undefined,
         fastestWait: undefined,
       },
+      user: {
+        daiBalance: undefined,
+        chaiBalance: undefined,
+      },
     },
   };
 }
