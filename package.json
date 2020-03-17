@@ -16,7 +16,8 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "ethers": "^4.0.45",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "web3modal": "^1.1.0"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",

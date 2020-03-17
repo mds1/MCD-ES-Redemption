@@ -86,7 +86,7 @@
     <!-- Contract Interataction -->
     <div class="container q-pt-xl">
       <div class="text-center">
-        TODO
+        <connect-wallet />
       </div>
     </div>
   </q-page>
@@ -94,9 +94,14 @@
 
 <script>
 import { mapState } from 'vuex';
+import ConnectWallet from 'components/ConnectWallet';
 
 export default {
   name: 'HomePage',
+
+  components: {
+    ConnectWallet,
+  },
 
   data() {
     return {

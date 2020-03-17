@@ -7,6 +7,15 @@ export function setProvider(state, provider) {
   }
 }
 
+export function setSigner(state, signer) {
+  try {
+    // Object.assign fails if signer is undefined
+    Object.assign(state.signer, signer);
+  } catch {
+    state.signer = signer;
+  }
+}
+
 export function setContracts(state, contracts) {
   try {
     Object.assign(state.contracts, contracts);

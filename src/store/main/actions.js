@@ -108,6 +108,10 @@ export function setProvider({ commit }, providerUsed) {
   commit('setProvider', providerUsed);
 }
 
+export function setSigner({ commit }, signer) {
+  commit('setSigner', signer);
+}
+
 export function setContracts({ commit }, contracts) {
   commit('setContracts', contracts);
 }
@@ -117,9 +121,17 @@ export function setSelectedComponents({ commit }, components) {
 }
 
 // eslint-disable-next-line
-export async function poll({ commit }) {
+export async function poll({ commit, state }) {
   // eslint-disable-next-line
   console.log('Polling blockchain for latest data...');
+
+  // Check for signer attached
+  let signer;
+  if (state.signer) {
+    signer = state.signer;
+  }
+  console.log('signer: ', signer);
+
 
   // Configure multicall queries
   const p1 = multi.aggregate([

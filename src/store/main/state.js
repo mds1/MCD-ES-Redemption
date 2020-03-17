@@ -2,6 +2,7 @@ export default function () {
   return {
     selectedComponents: undefined,
     provider: undefined,
+    signer: undefined,
     contracts: undefined, // object containing contract instances
     data: {
       blockNumber: undefined,
