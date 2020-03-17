@@ -3,6 +3,7 @@ export default function () {
     selectedComponents: undefined,
     provider: undefined,
     signer: undefined,
+    userAddress: undefined,
     contracts: undefined, // object containing contract instances
     data: {
       blockNumber: undefined,

@@ -7,12 +7,14 @@ export function setProvider(state, provider) {
   }
 }
 
-export function setSigner(state, signer) {
+export function setWallet(state, wallet) {
   try {
     // Object.assign fails if signer is undefined
-    Object.assign(state.signer, signer);
+    Object.assign(state.signer, wallet.signer);
+    state.userAddress = wallet.userAddress;
   } catch {
-    state.signer = signer;
+    state.signer = wallet.signer;
+    state.userAddress = wallet.userAddress;
   }
 }
 

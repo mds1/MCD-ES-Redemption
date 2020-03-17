@@ -8,15 +8,22 @@
   "author": "mds <17163988+mds1@users.noreply.github.com>",
   "private": true,
   "scripts": {
-    "dev": "npx quasar dev",
+    "dev": "source .env && npx quasar dev",
     "build": "git push && source .env && npx quasar build && npx firebase deploy",
     "lint": "eslint --ext .js,.vue src --fix",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@arkane-network/web3-arkane-provider": "^0.2.5",
+    "@portis/web3": "^2.0.0-beta.54",
     "@quasar/extras": "^1.0.0",
+    "@toruslabs/torus-embed": "^1.2.0",
+    "@walletconnect/web3-provider": "^1.0.0-beta.47",
+    "authereum": "^0.0.4-beta.121",
     "ethers": "^4.0.45",
+    "fortmatic": "^2.0.5",
     "quasar": "^1.0.0",
+    "squarelink": "^1.1.4",
     "web3modal": "^1.1.0"
   },
   "devDependencies": {

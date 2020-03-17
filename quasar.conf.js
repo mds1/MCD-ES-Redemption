@@ -80,6 +80,21 @@ module.exports = function (ctx) {
           },
         });
       },
+      env: ctx.dev
+        ? { // so on dev we'll have these environment variables
+          INFURA_ID: JSON.stringify(process.env.INFURA_ID),
+          PORTIS_ID: JSON.stringify(process.env.PORTIS_ID),
+          FORTMATIC_KEY: JSON.stringify(process.env.FORTMATIC_KEY),
+          SQUARELINK_ID: JSON.stringify(process.env.SQUARELINK_ID),
+          ARKANE_CLIENT_ID: JSON.stringify(process.env.ARKANE_CLIENT_ID),
+        }
+        : { // and on build (production) we'll have these:
+          INFURA_ID: JSON.stringify(process.env.INFURA_ID),
+          PORTIS_ID: JSON.stringify(process.env.PORTIS_ID),
+          FORTMATIC_KEY: JSON.stringify(process.env.FORTMATIC_KEY),
+          SQUARELINK_ID: JSON.stringify(process.env.SQUARELINK_ID),
+          ARKANE_CLIENT_ID: JSON.stringify(process.env.ARKANE_CLIENT_ID),
+        },
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer

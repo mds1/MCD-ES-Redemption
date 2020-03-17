@@ -108,8 +108,9 @@ export function setProvider({ commit }, providerUsed) {
   commit('setProvider', providerUsed);
 }
 
-export function setSigner({ commit }, signer) {
-  commit('setSigner', signer);
+export async function setWallet({ commit }, signer) {
+  const userAddress = await signer.getAddress();
+  commit('setWallet', { signer, userAddress });
 }
 
 export function setContracts({ commit }, contracts) {
