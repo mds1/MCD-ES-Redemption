@@ -23,8 +23,11 @@ export default function () {
         fastestWait: undefined,
       },
       user: {
+        ethBalance: undefined,
         daiBalance: undefined,
         chaiBalance: undefined,
+        daiAllowance: undefined,
+        chaiAllowance: undefined,
       },
     },
   };

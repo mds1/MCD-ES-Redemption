@@ -25,13 +25,19 @@
         </div>
         <!-- BLOCK NUMBER AND SETTINGS -->
         <div class="col-auto q-mr-md">
-          <div class="text-caption dark-toggle">
-            Block: {{ blockNumber }}
+          <div>
+            <div
+              v-if="userAddress"
+              class="text-caption text-right dark-toggle"
+            >
+              Address: {{ userAddress }}
+            </div>
+            <div class="text-caption text-right dark-toggle">
+              Block: {{ blockNumber }}
+            </div>
           </div>
 
-          <div
-            class="row justify-end q-mt-xs"
-          >
+          <div class="row justify-end q-mt-xs">
             <q-icon
               v-if="!$q.dark.isActive"
               class="col-auto dark-toggle"
@@ -71,21 +77,6 @@
             target="_blank"
             class="hyperlink"
           >Matt Solomon</a>.
-          <br><br>
-          Thanks to
-          <a
-            href="https://twitter.com/nanexcool"
-            target="_blank"
-            class="hyperlink"
-          >@nanexcool</a>
-          for building
-          <a
-            href="https://daistats.com/"
-            target="_blank"
-            class="hyperlink"
-          >Dai Stats</a>,
-          where a lot of the code to fetch Dai and Maker stats
-          was pulled from
         </div>
       </div>
     </q-footer>
@@ -107,6 +98,7 @@ export default {
     ...mapState({
       blockNumber: (state) => state.main.data.blockNumber,
       networkId: (state) => state.main.data.networkId,
+      userAddress: (state) => state.main.userAddress,
     }),
   },
 

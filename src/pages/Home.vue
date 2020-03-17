@@ -140,25 +140,6 @@ export default {
       chaiBalance: (state) => state.main.data.user.chaiBalance,
     }),
   },
-
-  methods: {
-    setWithdrawalAmount(token, fraction) {
-      if (token === 'dai') this.amountDai = parseFloat(this.daiBalance) * fraction;
-      if (token === 'chai') this.amountChai = parseFloat(this.chaiBalance) * fraction;
-    },
-
-    redeemDai() {
-      this.isDaiLoading = true;
-      alert('redeem dai');
-      this.isDaiLoading = false;
-    },
-
-    redeemChai() {
-      this.isChaiLoading = true;
-      alert('redeem chai');
-      this.isChaiLoading = false;
-    },
-  },
 };
 </script>
 

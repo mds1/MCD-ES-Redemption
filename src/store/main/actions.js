@@ -128,6 +128,7 @@ export async function poll({ commit, state }) {
 
   // If wallet is connected get user-specific information
   let userQueries = [];
+  let userPromises = [];
   if (state.signer) {
     const userAddress = await state.signer.getAddress();
     userQueries = [
@@ -136,6 +137,7 @@ export async function poll({ commit, state }) {
       [addresses.MCD_DAI, dai.interface.functions.allowance.encode([userAddress, addresses.ESRedemption])],
       [addresses.CHAI, chai.interface.functions.allowance.encode([userAddress, addresses.ESRedemption])],
     ];
+    userPromises = [provider.getBalance(userAddress)];
   }
 
   // Configure multicall queries
@@ -196,8 +198,8 @@ export async function poll({ commit, state }) {
 
   // Send promises
   const [
-    [blockNumber, res], ethSupply, ethPriceNxt, batPriceNxt, marketPrices, egsGasPrices,
-  ] = await Promise.all([p1, p2, p3, p4, p5, p6]);
+    [blockNumber, res], ethSupply, ethPriceNxt, batPriceNxt, marketPrices, egsGasPrices, ethBalance,
+  ] = await Promise.all([p1, p2, p3, p4, p5, p6, ...userPromises]);
 
   const ethIlk = vat.interface.functions.ilks.decode(res[2]);
   const batIlk = vat.interface.functions.ilks.decode(res[3]);
@@ -361,6 +363,7 @@ export async function poll({ commit, state }) {
     daiStats,
     egsGasPrices,
     user: {
+      ethBalance: ethBalance ? utils.formatEther(ethBalance) : utils.formatEther(ethers.constants.Zero),
       daiBalance: utils.formatEther(daiBalance),
       chaiBalance: utils.formatEther(chaiBalance),
       daiAllowance: utils.formatEther(daiAllowance),
