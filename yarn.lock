@@ -973,6 +973,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@burner-wallet/burner-connect-provider@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@burner-wallet/burner-connect-provider/-/burner-connect-provider-0.1.1.tgz#1eccd2e677cbd2eadf18ce32472bd962659dad5c"
+  integrity sha512-cHA2D/Jtn6QRc3szTwSHlJVxz5xKAW6coZw5OK0pwA7IQkZQmbs8DPIAa/qHYKCh7oP2CGcC0V45QgV18cqx4w==
+
 "@chaitanyapotti/random-id@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@chaitanyapotti/random-id/-/random-id-1.0.3.tgz#f52f647cfe9f79fc7723ea2b01b0ad3889204002"

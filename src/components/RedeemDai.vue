@@ -18,7 +18,13 @@
       <!-- Redeem -->
       <!-- if no allowance -->
       <q-card-section
-        v-if="parseFloat(allowance) === 0"
+        v-if="parseFloat(balance) === 0"
+        class="text-caption text-italic q-my-lg"
+      >
+        You have no Dai to redeem
+      </q-card-section>
+      <q-card-section
+        v-else-if="parseFloat(allowance) === 0"
         class="form"
       >
         <div style="max-width: 300px;">
@@ -82,12 +88,6 @@
           :loading="isLoading"
           @click="redeem()"
         />
-        <div
-          v-if="parseFloat(balance) === 0"
-          class="text-caption text-italic"
-        >
-          You have no Dai to redeem
-        </div>
       </q-card-section>
     </q-card>
   </div>

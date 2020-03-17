@@ -1,8 +1,8 @@
 <template>
   <q-page padding>
     <div class="text-center">
-      <h2 class="q-mt-lg">
-        Redeem Dai for USC
+      <h2 class="text-bold q-mt-lg">
+        Redeem Dai for USDC
       </h2>
       <h6 class="q-mt-md">
         Multi-Collateral Dai (MCD) is undergoing an emergency shutdown
@@ -10,19 +10,19 @@
     </div>
 
     <!-- EXPLAINER QUESTIONS -->
-    <div class="container">
+    <div class="container q-pb-lg">
       <!-- Question 1 -->
       <q-expansion-item
-        class="q-mt-xl"
+        class="q-mt-lg"
         group="question"
         dense
         switch-toggle-side
       >
         <template v-slot:header>
           <q-item-section>
-            <h4>
+            <div class="text-bold">
               What is an emergency shutdown?
-            </h4>
+            </div>
           </q-item-section>
         </template>
 
@@ -58,9 +58,9 @@
       >
         <template v-slot:header>
           <q-item-section>
-            <h4>
+            <div class="text-bold">
               What is this site?
-            </h4>
+            </div>
           </q-item-section>
         </template>
 
