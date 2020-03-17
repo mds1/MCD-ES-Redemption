@@ -96,151 +96,10 @@
         class="row justify-center "
       >
         <!-- REDEEM DAI -->
-        <div class="col-auto q-mr-md">
-          <q-card class="text-center full-height">
-            <!-- Header + Balance -->
-            <q-card-section class="row justify-center items-center">
-              <img
-                alt="Dai logo"
-                class="col-auto token-image q-pr-sm"
-                src="statics/logos/dai.png"
-              >
-              <h6 class="col-auto">
-                Redeem Dai
-              </h6>
-              <div class="col-xs-12 q-mt-sm">
-                Balance: {{ formatCurrency(daiBalance, false, 2, 4) }}
-              </div>
-            </q-card-section>
-            <!-- Redeem -->
-            <q-card-section class="form">
-              <div class="col-xs-12 row justify-evenly">
-                <q-btn
-                  color="primary"
-                  dense
-                  flat
-                  label="25%"
-                  @click="setWithdrawalAmount('dai', 0.25)"
-                />
-                <q-btn
-                  color="primary"
-                  dense
-                  flat
-                  label="50%"
-                  @click="setWithdrawalAmount('dai', 0.50)"
-                />
-                <q-btn
-                  color="primary"
-                  dense
-                  flat
-                  label="75%"
-                  @click="setWithdrawalAmount('dai', 0.75)"
-                />
-                <q-btn
-                  color="primary"
-                  dense
-                  flat
-                  label="100%"
-                  @click="setWithdrawalAmount('dai', 1)"
-                />
-              </div>
-              <q-input
-                v-model.number="amountDai"
-                class="q-mt-sm q-mb-md"
-                filled
-                label="Amount to redeem"
-                type="number"
-              />
-              <q-btn
-                color="primary"
-                class="q-mt-md q-mb-md"
-                label="Redeem Dai for USDC"
-                :disabled="parseFloat(daiBalance) === 0 || amountDai === undefined || amountDai <= 0"
-                :loading="isDaiLoading"
-                @click="redeemDai()"
-              />
-              <div
-                v-if="parseFloat(daiBalance) === 0"
-                class="text-caption text-italic"
-              >
-                You have no Dai to redeem
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
+        <redeem-dai class="col-auto q-mr-md" />
+
         <!-- REDEEM CHAI -->
-        <div class="col-auto q-ml-md">
-          <q-card class="text-center full-height">
-            <!-- Header + Balance -->
-            <q-card-section class="row justify-center items-center">
-              <img
-                alt="Chai logo"
-                class="col-auto token-image q-pr-sm"
-                src="statics/logos/chai.png"
-              >
-              <h6 class="col-auto">
-                Redeem Chai
-              </h6>
-              <div class="col-xs-12 q-mt-sm">
-                Balance: {{ formatCurrency(chaiBalance, false, 2, 4) }}
-              </div>
-            </q-card-section>
-            <!-- Redeem -->
-            <q-card-section class="form">
-              <div class="col-xs-12 row justify-evenly">
-                <q-btn
-                  color="primary"
-                  dense
-                  flat
-                  label="25%"
-                  @click="setWithdrawalAmount('chai', 0.25)"
-                />
-                <q-btn
-                  color="primary"
-                  dense
-                  flat
-                  label="50%"
-                  @click="setWithdrawalAmount('chai', 0.50)"
-                />
-                <q-btn
-                  color="primary"
-                  dense
-                  flat
-                  label="75%"
-                  @click="setWithdrawalAmount('chai', 0.75)"
-                />
-                <q-btn
-                  color="primary"
-                  dense
-                  flat
-                  label="100%"
-                  @click="setWithdrawalAmount('chai', 1)"
-                />
-              </div>
-              <q-input
-                v-model.number="amountChai"
-                class="q-mt-sm q-mb-md"
-                filled
-                label="Amount to redeem"
-                type="number"
-              />
-              <q-btn
-                color="primary"
-                class="q-mt-md q-mb-md"
-                label="Redeem Chai for USDC"
-                :disabled="parseFloat(chaiBalance) === 0 || amountChai === undefined || amountChai <= 0"
-                :loading="isChaiLoading"
-                @click="redeemChai()"
-              />
-              <div
-                v-if="parseFloat(chaiBalance) === 0"
-                class="text-caption text-italic"
-              >
-                You have no Chai to redeem
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
+        <redeem-chai class="col-auto q-ml-md" />
       </div>
     </div>
   </q-page>
@@ -250,12 +109,16 @@
 import { mapState } from 'vuex';
 import mixinHelpers from 'src/utils/mixinHelpers';
 import ConnectWallet from 'components/ConnectWallet';
+import RedeemDai from 'components/RedeemDai';
+import RedeemChai from 'components/RedeemChai';
 
 export default {
   name: 'HomePage',
 
   components: {
     ConnectWallet,
+    RedeemDai,
+    RedeemChai,
   },
 
   mixins: [mixinHelpers],
@@ -304,16 +167,5 @@ export default {
   margin: 0 auto;
   max-width: 800px;
   text-align: left;
-}
-
-.token-image {
-  margin-right: 0.5em;
-  max-width: 35px;
-  max-height: 35px;
-}
-
-.form {
-  margin: 0 auto;
-  max-width: 90%;
 }
 </style>
