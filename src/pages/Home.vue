@@ -5,7 +5,8 @@
         Redeem Dai for USDC
       </h2>
       <h6 class="q-mt-md">
-        Multi-Collateral Dai (MCD) is undergoing an emergency shutdown
+        <!-- Multi-Collateral Dai (MCD) is undergoing an emergency shutdown -->
+        This site can be used if an Emergency Shutdown of MCD is triggered
       </h6>
     </div>
 
