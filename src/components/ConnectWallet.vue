@@ -16,7 +16,7 @@ import Portis from '@portis/web3';
 import Fortmatic from 'fortmatic';
 import Squarelink from 'squarelink';
 import Torus from '@toruslabs/torus-embed';
-// import Arkane from "@arkane-network/web3-arkane-provider";
+import Arkane from '@arkane-network/web3-arkane-provider';
 import Authereum from 'authereum';
 import BurnerConnectProvider from '@burner-wallet/burner-connect-provider';
 
@@ -52,12 +52,12 @@ const providerOptions = {
     package: Torus, // required
     options: {},
   },
-  // arkane: {
-  //   package: Arkane, // required
-  //   options: {
-  //     clientId: 'ARKANE_CLIENT_ID', // required, replace
-  //   },
-  // },
+  arkane: {
+    package: Arkane, // required
+    options: {
+      clientId: process.env.ARKANE_CLIENT_ID,
+    },
+  },
   authereum: {
     package: Authereum, // required
     options: {},
@@ -94,10 +94,13 @@ export default {
   methods: {
     async connectWallet() {
       this.isLoading = true;
+      // Prompt user to connect wallet of their choice
       const web3provider = await web3Modal.connect();
       const provider = new ethers.providers.Web3Provider(web3provider);
       const signer = provider.getSigner();
       await this.$store.dispatch('main/setWallet', signer);
+      // Now we have a contract instance to use for sending transactions from
+      // the selected wallet
       this.ESRedemption = new ethers.Contract(addresses.ESRedemption, abi, signer);
       this.isLoading = false;
     },
